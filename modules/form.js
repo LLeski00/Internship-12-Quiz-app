@@ -1,3 +1,5 @@
+import { getTriviaQuestions } from "./api.js";
+
 const quizForm = document.querySelector("#quiz-form");
 quizForm.addEventListener("submit", handleFormSubmit);
 
@@ -8,7 +10,7 @@ function handleFormSubmit(event) {
     let difficulty = event.target[1].value;
     let gameType = event.target[2].value;
 
-    console.log(category, difficulty, gameType);
+    getTriviaQuestions(category, difficulty, gameType);
 }
 
 export { handleFormSubmit };
