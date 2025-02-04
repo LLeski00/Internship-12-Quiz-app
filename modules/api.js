@@ -1,4 +1,4 @@
-async function getTriviaQuestions(category, difficulty, gameType) {
+async function getTriviaContent(category, difficulty, gameType) {
     let apiUrl = "https://opentdb.com/api.php?amount=5";
 
     apiUrl = addQueryParameter(apiUrl, category);
@@ -25,4 +25,4 @@ function addQueryParameter(apiUrl, parameter) {
     return apiUrl;
 }
 
-export { getTriviaQuestions };
+export { getTriviaContent };
