@@ -2,7 +2,7 @@ const startQuizButton = document.querySelector("#start-quiz-button");
 const question = document.querySelector(".question");
 const questionCounter = document.querySelector(".question-counter");
 const answersHtml = document.querySelector(".answers");
-startQuizButton.addEventListener("click", handleStartQuizClick);
+startQuizButton.addEventListener("click", displayQuestion);
 
 let quizContent;
 let currentQuestionIdx = 0;
@@ -14,7 +14,7 @@ function loadQuiz(content) {
     numOfQuestions = quizContent.length;
 }
 
-function handleStartQuizClick() {
+function displayQuestion() {
     question.innerHTML = quizContent[currentQuestionIdx].question;
     questionCounter.innerHTML = `${currentQuestionIdx + 1} / ${numOfQuestions}`;
     let numOfAnswers =
@@ -23,6 +23,7 @@ function handleStartQuizClick() {
 }
 
 function createAnswers(numOfAnswers) {
+    answersHtml.innerHTML = "";
     let answers = [];
 
     for (let index = 0; index < numOfAnswers - 1; index++)
@@ -31,8 +32,16 @@ function createAnswers(numOfAnswers) {
     let correct_answer = quizContent[currentQuestionIdx].correct_answer;
     let randomIdx = Math.floor(Math.random() * numOfAnswers);
     answers.splice(randomIdx, 0, correct_answer);
-    console.log(answers.map((p) => `<p>${p}</p>`).join(""));
     answersHtml.innerHTML = answers.map((p) => `<p>${p}</p>`).join("");
+    answersHtml.childNodes.forEach((answer) => {
+        answer.addEventListener("click", checkAnswer);
+    });
+}
+
+function checkAnswer(event) {
+    let guessedAnswer = event.target.textContent;
+    if (guessedAnswer === quizContent[currentQuestionIdx].correct_answer)
+        console.log("Correct");
 }
 
 export { loadQuiz };
