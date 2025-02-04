@@ -1,6 +1,5 @@
 async function getTriviaQuestions(category, difficulty, gameType) {
     let apiUrl = "https://opentdb.com/api.php?amount=5";
-    let questions;
 
     apiUrl = addQueryParameter(apiUrl, category);
     apiUrl = addQueryParameter(apiUrl, difficulty);
@@ -13,12 +12,11 @@ async function getTriviaQuestions(category, difficulty, gameType) {
         }
 
         const json = await response.json();
-        questions = json.results;
+        return json.results;
     } catch (error) {
         console.error(error.message);
+        return false;
     }
-
-    console.log(questions);
 }
 
 function addQueryParameter(apiUrl, parameter) {

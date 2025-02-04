@@ -1,5 +1,3 @@
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+@import "/styles/definitions.css";
+@import "/styles/form.css";
+@import "/styles/quiz.css";
