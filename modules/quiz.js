@@ -2,6 +2,7 @@ import { handleUserGuess } from "./timer.js";
 
 const startQuizButton = document.querySelector("#start-quiz-button");
 const nextQuestionButton = document.querySelector("#next-question-button");
+const endQuizButton = document.querySelector("#end-quiz-button");
 const question = document.querySelector(".question");
 const questionCounter = document.querySelector(".question-counter");
 const answersHtml = document.querySelector(".answers");
@@ -9,10 +10,12 @@ const feedbackMessage = document.querySelector(".feedback-message");
 
 startQuizButton.addEventListener("click", displayQuestion);
 nextQuestionButton.addEventListener("click", displayQuestion);
+endQuizButton.addEventListener("click", endQuiz);
 
 let quizContent;
 let currentQuestionIdx = 0;
 let numOfQuestions;
+let userScore = 0;
 
 function loadQuiz(content) {
     startQuizButton.style.display = "block";
@@ -47,21 +50,21 @@ function displayAnswers(answers) {
     answersHtml.childNodes.forEach((answer) => {
         answer.addEventListener("click", handleUserGuess);
     });
-    console.log(answersHtml.innerHTML);
-    console.log(answersHtml.childNodes);
 }
 
 function checkAnswer(guess) {
-    if (guess === quizContent[currentQuestionIdx].correct_answer)
-        displayFeedbackMessage(true);
-    else displayFeedbackMessage(false);
+    if (guess === quizContent[currentQuestionIdx].correct_answer) {
+        userScore++;
+        displayAnswerFeedback(true);
+    } else displayAnswerFeedback(false);
 
     //TODO - disableAnswersClick();
     //TODO - Show correct answer
-    displayNextQuestionButton();
+    if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
+    else displayNextQuestionButton();
 }
 
-function displayFeedbackMessage(isCorrect) {
+function displayAnswerFeedback(isCorrect) {
     if (isCorrect) feedbackMessage.textContent = "The answer is correct!";
     else feedbackMessage.textContent = "The answer is incorrect!";
 }
@@ -69,6 +72,20 @@ function displayFeedbackMessage(isCorrect) {
 function displayNextQuestionButton() {
     currentQuestionIdx++;
     nextQuestionButton.style.display = "block";
+}
+
+function displayEndQuizButton() {
+    endQuizButton.style.display = "block";
+}
+
+function endQuiz() {
+    questionCounter.style.display = "none";
+    question.style.display = "none";
+    answersHtml.style.display = "none";
+    nextQuestionButton.style.display = "none";
+    endQuizButton.style.display = "none";
+
+    feedbackMessage.textContent = `You reached the end of the quiz! Your score: ${userScore} / ${numOfQuestions}`;
 }
 
 export { loadQuiz, checkAnswer };

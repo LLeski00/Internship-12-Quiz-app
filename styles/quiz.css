@@ -1,5 +1,6 @@
 #start-quiz-button,
-#next-question-button {
+#next-question-button,
+#end-quiz-button {
     display: none;
     margin: auto;
 }
