@@ -1,26 +1,39 @@
 import { handleUserGuess } from "./timer.js";
+import { displayForm } from "./form.js";
 
 const startQuizButton = document.querySelector("#start-quiz-button");
 const nextQuestionButton = document.querySelector("#next-question-button");
 const endQuizButton = document.querySelector("#end-quiz-button");
+const backButton = document.querySelector("#back-button");
 const question = document.querySelector(".question");
 const questionCounter = document.querySelector(".question-counter");
 const answersHtml = document.querySelector(".answers");
 const feedbackMessage = document.querySelector(".feedback-message");
 
-startQuizButton.addEventListener("click", displayQuestion);
+startQuizButton.addEventListener("click", startQuiz);
 nextQuestionButton.addEventListener("click", displayQuestion);
 endQuizButton.addEventListener("click", endQuiz);
+backButton.addEventListener("click", goBack);
 
 let quizContent;
-let currentQuestionIdx = 0;
+let currentQuestionIdx;
 let numOfQuestions;
-let userScore = 0;
+let userScore;
 
 function loadQuiz(content) {
     startQuizButton.style.display = "block";
     quizContent = content;
     numOfQuestions = quizContent.length;
+}
+
+function startQuiz() {
+    startQuizButton.style.display = "none";
+    currentQuestionIdx = 0;
+    userScore = 0;
+    displayQuestion();
+    questionCounter.style.display = "block";
+    question.style.display = "block";
+    answersHtml.style.display = "block";
 }
 
 function displayQuestion() {
@@ -86,6 +99,14 @@ function endQuiz() {
     endQuizButton.style.display = "none";
 
     feedbackMessage.textContent = `You reached the end of the quiz! Your score: ${userScore} / ${numOfQuestions}`;
+    backButton.style.display = "block";
+}
+
+function goBack() {
+    backButton.style.display = "none";
+    feedbackMessage.textContent = "";
+    displayForm();
+    startQuizButton.style.display = "none";
 }
 
 export { loadQuiz, checkAnswer };

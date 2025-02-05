@@ -28,4 +28,8 @@ function addQueryParameter(apiUrl, parameter) {
     return apiUrl;
 }
 
-export { handleFormSubmit };
+function displayForm() {
+    quizForm.style.display = "flex";
+}
+
+export { handleFormSubmit, displayForm };
