@@ -1,3 +1,5 @@
+import { handleUserGuess } from "./timer.js";
+
 const startQuizButton = document.querySelector("#start-quiz-button");
 const question = document.querySelector(".question");
 const questionCounter = document.querySelector(".question-counter");
@@ -34,14 +36,14 @@ function createAnswers(numOfAnswers) {
     answers.splice(randomIdx, 0, correct_answer);
     answersHtml.innerHTML = answers.map((p) => `<p>${p}</p>`).join("");
     answersHtml.childNodes.forEach((answer) => {
-        answer.addEventListener("click", checkAnswer);
+        answer.addEventListener("click", handleUserGuess);
     });
 }
 
-function checkAnswer(event) {
-    let guessedAnswer = event.target.textContent;
-    if (guessedAnswer === quizContent[currentQuestionIdx].correct_answer)
+function checkAnswer(guess) {
+    if (guess === quizContent[currentQuestionIdx].correct_answer)
         console.log("Correct");
+    else console.log("Incorret");
 }
 
-export { loadQuiz };
+export { loadQuiz, checkAnswer };
