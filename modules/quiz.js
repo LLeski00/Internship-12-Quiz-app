@@ -1,4 +1,4 @@
-import { handleUserGuess } from "./timer.js";
+import { handleUserGuess, startTimer, stopTimer, timerHTML } from "./timer.js";
 import { displayForm } from "./form.js";
 
 const startQuizButton = document.querySelector("#start-quiz-button");
@@ -32,6 +32,7 @@ function startQuiz() {
     userScore = 0;
     displayQuestion();
     questionCounter.style.display = "block";
+    timerHTML.style.display = "block";
     question.style.display = "block";
     answersHtml.style.display = "block";
 }
@@ -44,6 +45,7 @@ function displayQuestion() {
     let numOfAnswers =
         quizContent[currentQuestionIdx].incorrect_answers.length + 1;
     createAnswers(numOfAnswers);
+    startTimer();
 }
 
 function createAnswers(numOfAnswers) {
@@ -65,7 +67,10 @@ function displayAnswers(answers) {
     });
 }
 
+//TODO - Improve so there are custom feedback messages for instance when the timer runs out
 function checkAnswer(guess) {
+    stopTimer();
+
     if (guess === quizContent[currentQuestionIdx].correct_answer) {
         userScore++;
         displayAnswerFeedback(true);
@@ -91,8 +96,10 @@ function displayEndQuizButton() {
     endQuizButton.style.display = "block";
 }
 
+//TODO - Maybe change the HTML so you can display none only one thing and everything dissapears at once
 function endQuiz() {
     questionCounter.style.display = "none";
+    timerHTML.style.display = "none";
     question.style.display = "none";
     answersHtml.style.display = "none";
     nextQuestionButton.style.display = "none";
