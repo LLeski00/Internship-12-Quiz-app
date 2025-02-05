@@ -6,7 +6,8 @@ function handleUserGuess(event) {
     clearTimeout(timeoutId);
 
     timeoutId = setTimeout(() => {
-        checkAnswer(event.target.textContent);
+        if (confirm("Do you lock in your answer?"))
+            checkAnswer(event.target.textContent);
     }, 2000);
 }
 
