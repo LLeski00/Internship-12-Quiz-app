@@ -2,6 +2,8 @@ import { handleUserGuess, startTimer, stopTimer, timerHTML } from "./timer.js";
 import { displayForm, getCategory, getDifficulty } from "./form.js";
 import { saveResult } from "./history.js";
 
+const quizHTML = document.querySelector(".quiz");
+const quizMainHTML = document.querySelector(".quiz-main");
 const startQuizButton = document.querySelector("#start-quiz-button");
 const nextQuestionButton = document.querySelector("#next-question-button");
 const endQuizButton = document.querySelector("#end-quiz-button");
@@ -31,11 +33,12 @@ function startQuiz() {
     startQuizButton.style.display = "none";
     currentQuestionIdx = 0;
     userScore = 0;
+    displayQuiz();
+}
+
+function displayQuiz() {
     displayQuestion();
-    questionCounter.style.display = "block";
-    timerHTML.style.display = "block";
-    question.style.display = "block";
-    answersHtml.style.display = "grid";
+    quizMainHTML.style.display = "block";
 }
 
 function displayQuestion() {
@@ -78,7 +81,21 @@ function checkAnswer(guess) {
     } else displayAnswerFeedback(false, guess);
 
     //TODO - disableAnswersClick();
-    //TODO - Show correct answer
+    if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
+    else displayNextQuestionButton();
+}
+
+function questionTimeout() {
+    //TODO - Make a function for this like displayCorrectAnswer
+    const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
+        (p) =>
+            p.textContent.trim() ===
+            quizContent[currentQuestionIdx].correct_answer
+    );
+    correctAnswer.style.backgroundColor = "green";
+    feedbackHTML.textContent = "Time ran out!";
+
+    //TODO - Maybe make a function for this like checkEndQuiz()
     if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
     else displayNextQuestionButton();
 }
@@ -139,12 +156,8 @@ function displayEndQuizButton() {
     endQuizButton.style.display = "block";
 }
 
-//TODO - Maybe change the HTML so you can display none only one thing and everything dissapears at once
 function endQuiz() {
-    questionCounter.style.display = "none";
-    timerHTML.style.display = "none";
-    question.style.display = "none";
-    answersHtml.style.display = "none";
+    quizMainHTML.style.display = "none";
     nextQuestionButton.style.display = "none";
     endQuizButton.style.display = "none";
 
@@ -163,4 +176,4 @@ function goBack() {
     startQuizButton.style.display = "none";
 }
 
-export { loadQuiz, checkAnswer };
+export { loadQuiz, checkAnswer, questionTimeout };

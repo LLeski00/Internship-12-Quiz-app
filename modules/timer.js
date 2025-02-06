@@ -1,4 +1,4 @@
-import { checkAnswer } from "./quiz.js";
+import { checkAnswer, questionTimeout } from "./quiz.js";
 
 const timerHTML = document.querySelector(".timer");
 
@@ -27,8 +27,8 @@ function startTimer() {
         if (timer - 1 === 0) {
             timer = 0;
             timerHTML.textContent = timer;
-            clearInterval(timerId);
-            checkAnswer(false);
+            stopTimer();
+            questionTimeout();
         } else {
             timer--;
             timerHTML.textContent = timer;
