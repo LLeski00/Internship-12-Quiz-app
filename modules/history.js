@@ -9,7 +9,7 @@ function loadResults() {
 
     for (const result of results) {
         let p = document.createElement("p");
-        p.textContent = `${result.date} - Category: ${result.category} - Difficulty: ${result.difficulty} - Score: ${result.score}`;
+        p.textContent = `${result.date} - Category: ${result.category} - Difficulty: ${result.difficulty} - Score: ${result.score}%`;
         resultsHTML.appendChild(p);
     }
 }
@@ -31,7 +31,7 @@ function saveResult(category, difficulty, score) {
         localStorage.setItem("results", JSON.stringify(updatedResults));
     }
     const p = document.createElement("p");
-    p.textContent = `${newResult.date} - Category: ${newResult.category} - Difficulty: ${newResult.difficulty} - Score: ${newResult.score}`;
+    p.textContent = `${newResult.date} - Category: ${newResult.category} - Difficulty: ${newResult.difficulty} - Score: ${newResult.score}%`;
     resultsHTML.insertBefore(p, resultsHTML.firstChild);
 }
 

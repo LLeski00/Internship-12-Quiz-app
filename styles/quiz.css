@@ -5,3 +5,24 @@
     display: none;
     margin: auto;
 }
+
+.quiz {
+    background-color: rgb(132, 132, 132);
+    margin-inline: 20%;
+    padding: 20px;
+    box-shadow: 10px 10px 10px rgb(71, 71, 71);
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 20px;
+}
+
+.answers > p {
+    background-color: whitesmoke;
+    cursor: pointer;
+    height: 40px;
+    text-align: center;
+}

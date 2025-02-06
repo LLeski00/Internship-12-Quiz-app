@@ -9,7 +9,7 @@ const backButton = document.querySelector("#back-button");
 const question = document.querySelector(".question");
 const questionCounter = document.querySelector(".question-counter");
 const answersHtml = document.querySelector(".answers");
-const feedbackMessage = document.querySelector(".feedback-message");
+const feedbackHTML = document.querySelector(".feedback-message");
 
 startQuizButton.addEventListener("click", startQuiz);
 nextQuestionButton.addEventListener("click", displayQuestion);
@@ -35,11 +35,11 @@ function startQuiz() {
     questionCounter.style.display = "block";
     timerHTML.style.display = "block";
     question.style.display = "block";
-    answersHtml.style.display = "block";
+    answersHtml.style.display = "grid";
 }
 
 function displayQuestion() {
-    feedbackMessage.textContent = "";
+    feedbackHTML.textContent = "";
     nextQuestionButton.style.display = "none";
     question.innerHTML = quizContent[currentQuestionIdx].question;
     questionCounter.innerHTML = `${currentQuestionIdx + 1} / ${numOfQuestions}`;
@@ -74,8 +74,8 @@ function checkAnswer(guess) {
 
     if (guess === quizContent[currentQuestionIdx].correct_answer) {
         userScore++;
-        displayAnswerFeedback(true);
-    } else displayAnswerFeedback(false);
+        displayAnswerFeedback(true, guess);
+    } else displayAnswerFeedback(false, guess);
 
     //TODO - disableAnswersClick();
     //TODO - Show correct answer
@@ -83,9 +83,51 @@ function checkAnswer(guess) {
     else displayNextQuestionButton();
 }
 
-function displayAnswerFeedback(isCorrect) {
-    if (isCorrect) feedbackMessage.textContent = "The answer is correct!";
-    else feedbackMessage.textContent = "The answer is incorrect!";
+function displayAnswerFeedback(isCorrect, answer) {
+    const guess = [...document.querySelectorAll(".answers > p")].find(
+        (p) => p.textContent.trim() === answer
+    );
+
+    if (isCorrect) {
+        guess.style.backgroundColor = "green";
+        feedbackHTML.textContent = "The answer is correct!";
+    } else {
+        const correctAnswer = [
+            ...document.querySelectorAll(".answers > p"),
+        ].find(
+            (p) =>
+                p.textContent.trim() ===
+                quizContent[currentQuestionIdx].correct_answer
+        );
+        guess.style.backgroundColor = "red";
+        correctAnswer.style.backgroundColor = "green";
+        feedbackHTML.textContent = "The answer is incorrect!";
+    }
+}
+
+function displayScoreFeedback() {
+    let score = (userScore / numOfQuestions) * 100;
+    let feedbackMessage;
+
+    if (score < 20)
+        feedbackMessage =
+            "Don’t give up! Mistakes help us learn. Review the material and try again—you can do it!";
+    else if (score < 40)
+        feedbackMessage =
+            "Keep going! You’re getting there. Focus a bit more, and you’ll improve in no time!";
+    else if (score < 60)
+        feedbackMessage =
+            "Nice effort! You’ve got the basics, but there’s room for improvement. Keep practicing!";
+    else if (score < 80)
+        feedbackMessage =
+            "Well done! You're on the right track. A little more effort, and you'll reach the top!";
+    else
+        feedbackMessage =
+            "Great job! You showed outstanding understanding and effort. Keep up the amazing work!";
+
+    feedbackHTML.textContent = `You reached the end of the quiz! Your score: ${
+        (userScore / numOfQuestions) * 100
+    }% ${feedbackMessage}`;
 }
 
 function displayNextQuestionButton() {
@@ -106,9 +148,7 @@ function endQuiz() {
     nextQuestionButton.style.display = "none";
     endQuizButton.style.display = "none";
 
-    feedbackMessage.textContent = `You reached the end of the quiz! Your score: ${
-        (userScore / numOfQuestions) * 100
-    }%`;
+    displayScoreFeedback();
     backButton.style.display = "block";
 
     let category = getCategory();
@@ -118,7 +158,7 @@ function endQuiz() {
 
 function goBack() {
     backButton.style.display = "none";
-    feedbackMessage.textContent = "";
+    feedbackHTML.textContent = "";
     displayForm();
     startQuizButton.style.display = "none";
 }
