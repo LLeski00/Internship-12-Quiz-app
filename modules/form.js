@@ -4,12 +4,16 @@ import { loadQuiz } from "./quiz.js";
 const quizForm = document.querySelector("#quiz-form");
 quizForm.addEventListener("submit", handleFormSubmit);
 
+let category;
+let difficulty;
+let gameType;
+
 async function handleFormSubmit(event) {
     event.preventDefault();
 
-    let category = event.target[0].value;
-    let difficulty = event.target[1].value;
-    let gameType = event.target[2].value;
+    category = event.target[0].value;
+    difficulty = event.target[1].value;
+    gameType = event.target[2].value;
     let apiUrl = quizApi;
     apiUrl = addQueryParameter(apiUrl, category);
     apiUrl = addQueryParameter(apiUrl, difficulty);
@@ -32,4 +36,15 @@ function displayForm() {
     quizForm.style.display = "flex";
 }
 
-export { handleFormSubmit, displayForm };
+function getCategory() {
+    return document.querySelector(`#quiz-category option[value="${category}"]`)
+        ?.textContent;
+}
+
+function getDifficulty() {
+    return document.querySelector(
+        `#quiz-difficulty option[value="${difficulty}"]`
+    )?.textContent;
+}
+
+export { handleFormSubmit, displayForm, getCategory, getDifficulty };

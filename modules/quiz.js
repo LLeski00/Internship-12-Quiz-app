@@ -1,5 +1,6 @@
 import { handleUserGuess, startTimer, stopTimer, timerHTML } from "./timer.js";
-import { displayForm } from "./form.js";
+import { displayForm, getCategory, getDifficulty } from "./form.js";
+import { saveResult } from "./history.js";
 
 const startQuizButton = document.querySelector("#start-quiz-button");
 const nextQuestionButton = document.querySelector("#next-question-button");
@@ -105,8 +106,14 @@ function endQuiz() {
     nextQuestionButton.style.display = "none";
     endQuizButton.style.display = "none";
 
-    feedbackMessage.textContent = `You reached the end of the quiz! Your score: ${userScore} / ${numOfQuestions}`;
+    feedbackMessage.textContent = `You reached the end of the quiz! Your score: ${
+        (userScore / numOfQuestions) * 100
+    }%`;
     backButton.style.display = "block";
+
+    let category = getCategory();
+    let difficulty = getDifficulty();
+    saveResult(category, difficulty, (userScore / numOfQuestions) * 100);
 }
 
 function goBack() {
