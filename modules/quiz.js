@@ -1,6 +1,7 @@
 import { handleUserGuess, startTimer, stopTimer } from "./timer.js";
 import { displayForm, getCategory, getDifficulty } from "./form.js";
 import { saveResult, hideResults, displayResults } from "./history.js";
+import { decodeHtmlEntities } from "./helpers.js";
 
 const quizHTML = document.querySelector(".quiz");
 const quizNavHTML = document.querySelector(".quiz-nav");
@@ -81,7 +82,10 @@ function checkAnswer(guess) {
     stopTimer();
     disableAnswersClick();
 
-    if (guess === quizContent[currentQuestionIdx].correct_answer) {
+    if (
+        guess ===
+        decodeHtmlEntities(quizContent[currentQuestionIdx].correct_answer)
+    ) {
         userScore++;
         displayAnswerFeedback(true, guess);
     } else displayAnswerFeedback(false, guess);
@@ -93,13 +97,10 @@ function questionTimeout() {
     disableAnswersClick();
 
     //TODO - Make a function for this like displayCorrectAnswer
-    console.log(
-        "Correct answer: ",
-        quizContent[currentQuestionIdx].correct_answer
-    );
-    console.log("Answers: ", document.querySelectorAll(".answers > p"));
     const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
-        (p) => p.textContent === quizContent[currentQuestionIdx].correct_answer
+        (p) =>
+            p.textContent ===
+            decodeHtmlEntities(quizContent[currentQuestionIdx].correct_answer)
     );
     correctAnswer.style.borderColor = "green";
     feedbackHTML.textContent = "Time ran out!";
@@ -114,12 +115,6 @@ function disableAnswersClick() {
 }
 
 function displayAnswerFeedback(isCorrect, answer) {
-    console.log("answer:", answer);
-    console.log("answers: ", document.querySelectorAll(".answers > p"));
-    console.log(
-        "Correct answer: ",
-        quizContent[currentQuestionIdx].correct_answer
-    );
     const guess = [...document.querySelectorAll(".answers > p")].find(
         (p) => p.textContent === answer
     );
@@ -132,7 +127,10 @@ function displayAnswerFeedback(isCorrect, answer) {
             ...document.querySelectorAll(".answers > p"),
         ].find(
             (p) =>
-                p.textContent === quizContent[currentQuestionIdx].correct_answer
+                p.textContent ===
+                decodeHtmlEntities(
+                    quizContent[currentQuestionIdx].correct_answer
+                )
         );
         guess.style.borderColor = "red";
         correctAnswer.style.borderColor = "green";

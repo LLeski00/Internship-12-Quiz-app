@@ -10,23 +10,21 @@ const timeout = 4;
 
 function handleUserGuess(event) {
     clearTimeout(timeoutId);
-
     guess = event.target.textContent;
-
     timeoutId = setTimeout(() => {
         confirmGuess();
+        guess = "";
     }, 2000);
 }
 
 function startTimer() {
     stopTimer();
-
     timer = timeout;
     timerHTML.textContent = timer;
-
     timerId = setInterval(() => {
         if (timer === 1) {
             handleQuestionTimeout();
+            guess = "";
         } else {
             timer--;
             timerHTML.textContent = timer;
@@ -35,14 +33,15 @@ function startTimer() {
 }
 
 function handleQuestionTimeout() {
+    clearTimeout(timeoutId);
     timer = 0;
     timerHTML.textContent = timer;
     stopTimer();
-    if (guess === "") questionTimeout();
+    console.log("GUESS", guess);
+    if (!guess) questionTimeout();
     else {
         if (!confirmGuess()) questionTimeout();
     }
-    clearTimeout(timeoutId);
 }
 
 function stopTimer() {
@@ -52,7 +51,6 @@ function stopTimer() {
 function confirmGuess() {
     if (confirm("Do you lock in your answer?")) {
         checkAnswer(guess);
-        guess = "";
         return true;
     }
 
