@@ -8,13 +8,15 @@
 
 .quiz {
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .quiz-main {
     display: none;
+}
+
+.quiz-nav {
+    display: flex;
+    justify-content: space-between;
 }
 
 .answers {

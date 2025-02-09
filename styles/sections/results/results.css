@@ -4,8 +4,17 @@
     color: white;
 }
 
+.results-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .results-list > p {
     background-color: var(--white-box-color);
+    border: solid black;
+    padding: 10px;
     margin-inline: 10%;
     box-shadow: 10px 10px 10px var(--gray-shadow-color);
 }

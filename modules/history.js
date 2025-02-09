@@ -1,3 +1,4 @@
+const quizResultsHTML = document.querySelector(".quiz-results");
 const resultsHTML = document.querySelector(".results-list");
 
 loadResults();
@@ -35,4 +36,12 @@ function saveResult(category, difficulty, score) {
     resultsHTML.insertBefore(p, resultsHTML.firstChild);
 }
 
-export { saveResult };
+function hideResults() {
+    quizResultsHTML.style.display = "none";
+}
+
+function displayResults() {
+    quizResultsHTML.style.display = "block";
+}
+
+export { saveResult, hideResults, displayResults };

@@ -1,6 +1,6 @@
-import { handleUserGuess, startTimer, stopTimer, timerHTML } from "./timer.js";
+import { handleUserGuess, startTimer, stopTimer } from "./timer.js";
 import { displayForm, getCategory, getDifficulty } from "./form.js";
-import { saveResult } from "./history.js";
+import { saveResult, hideResults, displayResults } from "./history.js";
 
 const quizHTML = document.querySelector(".quiz");
 const quizMainHTML = document.querySelector(".quiz-main");
@@ -10,6 +10,7 @@ const endQuizButton = document.querySelector("#end-quiz-button");
 const backButton = document.querySelector("#back-button");
 const question = document.querySelector(".question");
 const questionCounter = document.querySelector(".question-counter");
+const userScoreHTML = document.querySelector(".user-score");
 const answersHtml = document.querySelector(".answers");
 const feedbackHTML = document.querySelector(".feedback-message");
 
@@ -24,7 +25,7 @@ let numOfQuestions;
 let userScore;
 
 function loadQuiz(content) {
-    quizHTML.style.display = "flex";
+    quizHTML.style.display = "block";
     startQuizButton.style.display = "block";
     quizContent = content;
     numOfQuestions = quizContent.length;
@@ -48,6 +49,7 @@ function displayQuestion() {
     nextQuestionButton.style.display = "none";
     question.innerHTML = quizContent[currentQuestionIdx].question;
     questionCounter.innerHTML = `${currentQuestionIdx + 1} / ${numOfQuestions}`;
+    userScoreHTML.textContent = `Score: ${userScore} / ${numOfQuestions}`;
     let numOfAnswers =
         quizContent[currentQuestionIdx].incorrect_answers.length + 1;
     createAnswers(numOfAnswers);
@@ -73,7 +75,6 @@ function displayAnswers(answers) {
     });
 }
 
-//TODO - Improve so there are custom feedback messages for instance when the timer runs out
 function checkAnswer(guess) {
     stopTimer();
 
@@ -90,9 +91,7 @@ function checkAnswer(guess) {
 function questionTimeout() {
     //TODO - Make a function for this like displayCorrectAnswer
     const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
-        (p) =>
-            p.textContent.trim() ===
-            quizContent[currentQuestionIdx].correct_answer
+        (p) => p.textContent === quizContent[currentQuestionIdx].correct_answer
     );
     correctAnswer.style.backgroundColor = "green";
     feedbackHTML.textContent = "Time ran out!";
@@ -173,9 +172,10 @@ function endQuiz() {
 
 function goBack() {
     backButton.style.display = "none";
+    quizHTML.style.display = "none";
     feedbackHTML.textContent = "";
     displayForm();
-    startQuizButton.style.display = "none";
+    displayResults();
 }
 
 export { loadQuiz, checkAnswer, questionTimeout };

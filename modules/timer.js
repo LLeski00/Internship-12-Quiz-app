@@ -24,7 +24,7 @@ function startTimer() {
     timerHTML.textContent = timer;
 
     timerId = setInterval(() => {
-        if (timer - 1 === 0) {
+        if (timer === 1) {
             timer = 0;
             timerHTML.textContent = timer;
             stopTimer();
@@ -40,4 +40,4 @@ function stopTimer() {
     clearInterval(timerId);
 }
 
-export { handleUserGuess, startTimer, stopTimer, timerHTML };
+export { handleUserGuess, startTimer, stopTimer };
