@@ -5,15 +5,16 @@ const timerHTML = document.querySelector(".timer");
 let timeoutId;
 let timerId;
 let timer;
-const timeout = 20;
+let guess;
+const timeout = 4;
 
-//TODO - Think about the situation where the user choses an answer 1s before the timeout
 function handleUserGuess(event) {
     clearTimeout(timeoutId);
 
+    guess = event.target.textContent;
+
     timeoutId = setTimeout(() => {
-        if (confirm("Do you lock in your answer?"))
-            checkAnswer(event.target.textContent);
+        confirmGuess();
     }, 2000);
 }
 
@@ -25,10 +26,7 @@ function startTimer() {
 
     timerId = setInterval(() => {
         if (timer === 1) {
-            timer = 0;
-            timerHTML.textContent = timer;
-            stopTimer();
-            questionTimeout();
+            handleQuestionTimeout();
         } else {
             timer--;
             timerHTML.textContent = timer;
@@ -36,8 +34,29 @@ function startTimer() {
     }, 1000);
 }
 
+function handleQuestionTimeout() {
+    timer = 0;
+    timerHTML.textContent = timer;
+    stopTimer();
+    if (guess === "") questionTimeout();
+    else {
+        if (!confirmGuess()) questionTimeout();
+    }
+    clearTimeout(timeoutId);
+}
+
 function stopTimer() {
     clearInterval(timerId);
+}
+
+function confirmGuess() {
+    if (confirm("Do you lock in your answer?")) {
+        checkAnswer(guess);
+        guess = "";
+        return true;
+    }
+
+    return false;
 }
 
 export { handleUserGuess, startTimer, stopTimer };

@@ -19,9 +19,8 @@
 .quiz-nav {
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
-    padding-bottom: 10px;
+    padding: 0px 10px 10px 10px;
     border-bottom: solid rgba(83, 157, 255, 0.507) 1px;
-    padding-inline: 10px;
 }
 
 .quiz-nav > p:nth-child(2) {
@@ -40,11 +39,16 @@
 }
 
 .answers > p {
-    cursor: pointer;
     border: solid rgb(150, 150, 150) 4px;
     border-radius: 10px;
     height: 40px;
     text-align: center;
+}
+
+.answers > p:hover {
+    cursor: pointer;
+    border-color: rgb(51, 89, 255);
+    transition: border-color 0.5s;
 }
 
 .feedback-message {

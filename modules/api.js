@@ -1,6 +1,12 @@
-const quizApi = "https://opentdb.com/api.php?amount=5";
+const numOfQuestions = 5;
+const quizApi = `https://opentdb.com/api.php?amount=${numOfQuestions}`;
 
-async function getTriviaContent(apiUrl) {
+async function getTriviaContent(category, difficulty, gameType) {
+    let apiUrl = quizApi;
+    apiUrl = addQueryParameter(apiUrl, category);
+    apiUrl = addQueryParameter(apiUrl, difficulty);
+    apiUrl = addQueryParameter(apiUrl, gameType);
+
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) {
@@ -15,4 +21,10 @@ async function getTriviaContent(apiUrl) {
     }
 }
 
-export { getTriviaContent, quizApi };
+function addQueryParameter(apiUrl, parameter) {
+    if (parameter !== "any") apiUrl += "&" + parameter;
+
+    return apiUrl;
+}
+
+export { getTriviaContent };

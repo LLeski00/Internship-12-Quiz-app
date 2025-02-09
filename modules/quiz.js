@@ -86,8 +86,7 @@ function checkAnswer(guess) {
         displayAnswerFeedback(true, guess);
     } else displayAnswerFeedback(false, guess);
 
-    if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
-    else displayNextQuestionButton();
+    checkEndQuiz();
 }
 
 function questionTimeout() {
@@ -105,9 +104,7 @@ function questionTimeout() {
     correctAnswer.style.borderColor = "green";
     feedbackHTML.textContent = "Time ran out!";
 
-    //TODO - Maybe make a function for this like checkEndQuiz()
-    if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
-    else displayNextQuestionButton();
+    checkEndQuiz();
 }
 
 function disableAnswersClick() {
@@ -171,6 +168,11 @@ function displayScoreFeedback() {
 function displayNextQuestionButton() {
     currentQuestionIdx++;
     nextQuestionButton.style.display = "block";
+}
+
+function checkEndQuiz() {
+    if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
+    else displayNextQuestionButton();
 }
 
 function displayEndQuizButton() {
