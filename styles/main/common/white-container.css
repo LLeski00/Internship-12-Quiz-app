@@ -1,0 +1,9 @@
+.white-container {
+    background-color: var(--white-box-color);
+    box-shadow: 10px 10px 10px var(--gray-shadow-color);
+    max-width: 500px;
+    border-radius: 20px;
+    margin-inline: auto;
+    padding: 20px 0px;
+    min-height: 400px;
+}

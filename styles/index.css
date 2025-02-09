@@ -1,4 +1,7 @@
-@import "/styles/definitions.css";
-@import "/styles/form.css";
-@import "/styles/quiz.css";
-@import "/styles/results.css";
+@import "/styles/main/definitions.css";
+@import "/styles/main/variables.css";
+@import "/styles/main/common/white-container.css";
+@import "/styles/main/common/blue-button.css";
+@import "/styles/sections/form/form.css";
+@import "/styles/sections/quiz/quiz.css";
+@import "/styles/sections/results/results.css";

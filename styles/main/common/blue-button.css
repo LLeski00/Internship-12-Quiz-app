@@ -1,0 +1,14 @@
+.blue-button {
+    width: 50%;
+    height: 60px;
+    background-color: rgb(0, 47, 150);
+    color: white;
+    border: solid black;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.blue-button:hover {
+    cursor: pointer;
+    background-color: rgb(0, 40, 128);
+}
