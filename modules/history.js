@@ -1,4 +1,4 @@
-const resultsHTML = document.querySelector(".quiz-results");
+const resultsHTML = document.querySelector(".results-list");
 
 loadResults();
 

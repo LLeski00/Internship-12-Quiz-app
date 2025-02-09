@@ -24,15 +24,17 @@ let numOfQuestions;
 let userScore;
 
 function loadQuiz(content) {
+    quizHTML.style.display = "flex";
     startQuizButton.style.display = "block";
     quizContent = content;
     numOfQuestions = quizContent.length;
 }
 
 function startQuiz() {
-    startQuizButton.style.display = "none";
     currentQuestionIdx = 0;
     userScore = 0;
+    startQuizButton.style.display = "none";
+    hideResults();
     displayQuiz();
 }
 

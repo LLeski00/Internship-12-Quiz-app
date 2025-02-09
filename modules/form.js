@@ -20,7 +20,7 @@ async function handleFormSubmit(event) {
     apiUrl = addQueryParameter(apiUrl, gameType);
 
     let content = await getTriviaContent(apiUrl);
-    if (content === false) return;
+    if (!content) return;
 
     quizForm.style.display = "none";
     loadQuiz(content);

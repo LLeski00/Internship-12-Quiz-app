@@ -34,10 +34,10 @@
                 <option value="type=multiple">Multiple choices</option>
                 <option value="type=boolean">True/false</option>
             </select>
-            <button type="submit">Get quiz questions</button>
+            <button type="submit">Confirm</button>
         </form>
-        <button id="start-quiz-button">Start quiz</button>
         <section class="quiz">
+            <button id="start-quiz-button">Start quiz</button>
             <div class="quiz-main">
                 <div class="quiz-nav">
                     <p class="question-counter"></p>
@@ -52,7 +52,10 @@
             <button id="end-quiz-button">End quiz</button>
         </section>
         <button id="back-button">Back</button>
-        <section class="quiz-results"></section>
+        <section class="quiz-results">
+            <h2>Results</h2>
+            <div class="results-list"></div>
+        </section>
     </body>
     <script type="module" src="/modules/index.js"></script>
 </html>

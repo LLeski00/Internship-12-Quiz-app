@@ -11,6 +11,15 @@
     margin-inline: 20%;
     padding: 20px;
     box-shadow: 10px 10px 10px rgb(71, 71, 71);
+    display: none;
+    height: 400px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-main {
+    display: none;
 }
 
 .answers {
