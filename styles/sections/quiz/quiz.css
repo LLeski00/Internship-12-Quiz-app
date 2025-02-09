@@ -12,13 +12,16 @@
 
 .quiz-main {
     display: none;
+    padding-inline: 10px;
+    margin-top: 10px;
 }
 
 .quiz-nav {
-    display: grid;
+    display: none;
     grid-template-columns: 1fr 1fr 1fr;
     padding-bottom: 10px;
     border-bottom: solid rgba(83, 157, 255, 0.507) 1px;
+    padding-inline: 10px;
 }
 
 .quiz-nav > p:nth-child(2) {
@@ -33,12 +36,18 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    padding: 20px;
+    padding: 20px 0px;
 }
 
 .answers > p {
-    background-color: whitesmoke;
     cursor: pointer;
+    border: solid rgb(150, 150, 150) 4px;
+    border-radius: 10px;
     height: 40px;
     text-align: center;
+}
+
+.feedback-message {
+    text-align: center;
+    margin-bottom: 10px;
 }

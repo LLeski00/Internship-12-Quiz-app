@@ -3,6 +3,7 @@ import { displayForm, getCategory, getDifficulty } from "./form.js";
 import { saveResult, hideResults, displayResults } from "./history.js";
 
 const quizHTML = document.querySelector(".quiz");
+const quizNavHTML = document.querySelector(".quiz-nav");
 const quizMainHTML = document.querySelector(".quiz-main");
 const startQuizButton = document.querySelector("#start-quiz-button");
 const nextQuestionButton = document.querySelector("#next-question-button");
@@ -41,6 +42,7 @@ function startQuiz() {
 
 function displayQuiz() {
     displayQuestion();
+    quizNavHTML.style.display = "grid";
     quizMainHTML.style.display = "block";
 }
 
@@ -93,7 +95,7 @@ function questionTimeout() {
     const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
         (p) => p.textContent === quizContent[currentQuestionIdx].correct_answer
     );
-    correctAnswer.style.backgroundColor = "green";
+    correctAnswer.style.borderColor = "green";
     feedbackHTML.textContent = "Time ran out!";
 
     //TODO - Maybe make a function for this like checkEndQuiz()
@@ -102,23 +104,24 @@ function questionTimeout() {
 }
 
 function displayAnswerFeedback(isCorrect, answer) {
+    console.log("answer:", answer);
+    console.log("answers: ", document.querySelectorAll(".answers > p"));
     const guess = [...document.querySelectorAll(".answers > p")].find(
-        (p) => p.textContent.trim() === answer
+        (p) => p.textContent === answer
     );
 
     if (isCorrect) {
-        guess.style.backgroundColor = "green";
+        guess.style.borderColor = "green";
         feedbackHTML.textContent = "The answer is correct!";
     } else {
         const correctAnswer = [
             ...document.querySelectorAll(".answers > p"),
         ].find(
             (p) =>
-                p.textContent.trim() ===
-                quizContent[currentQuestionIdx].correct_answer
+                p.textContent === quizContent[currentQuestionIdx].correct_answer
         );
-        guess.style.backgroundColor = "red";
-        correctAnswer.style.backgroundColor = "green";
+        guess.style.borderColor = "red";
+        correctAnswer.style.borderColor = "green";
         feedbackHTML.textContent = "The answer is incorrect!";
     }
 }
@@ -158,6 +161,7 @@ function displayEndQuizButton() {
 }
 
 function endQuiz() {
+    quizNavHTML.style.display = "none";
     quizMainHTML.style.display = "none";
     nextQuestionButton.style.display = "none";
     endQuizButton.style.display = "none";
