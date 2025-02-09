@@ -92,6 +92,11 @@ function checkAnswer(guess) {
 
 function questionTimeout() {
     //TODO - Make a function for this like displayCorrectAnswer
+    console.log(
+        "Correct answer: ",
+        quizContent[currentQuestionIdx].correct_answer
+    );
+    console.log("Answers: ", document.querySelectorAll(".answers > p"));
     const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
         (p) => p.textContent === quizContent[currentQuestionIdx].correct_answer
     );

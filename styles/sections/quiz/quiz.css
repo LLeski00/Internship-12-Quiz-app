@@ -50,4 +50,5 @@
 .feedback-message {
     text-align: center;
     margin-bottom: 10px;
+    padding-inline: 10px;
 }

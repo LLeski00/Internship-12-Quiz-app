@@ -6,7 +6,14 @@ loadResults();
 function loadResults() {
     const results = JSON.parse(localStorage.getItem("results"));
 
-    if (!results) return;
+    if (!results) {
+        let h3 = document.createElement("h3");
+        h3.textContent = "There are no results for now.";
+        resultsHTML.appendChild(h3);
+        return;
+    }
+
+    resultsHTML.innerHTML = "";
 
     for (const result of results) {
         let p = document.createElement("p");
@@ -31,9 +38,7 @@ function saveResult(category, difficulty, score) {
         updatedResults.unshift(newResult);
         localStorage.setItem("results", JSON.stringify(updatedResults));
     }
-    const p = document.createElement("p");
-    p.textContent = `${newResult.date} - Category: ${newResult.category} - Difficulty: ${newResult.difficulty} - Score: ${newResult.score}%`;
-    resultsHTML.insertBefore(p, resultsHTML.firstChild);
+    loadResults();
 }
 
 function hideResults() {
