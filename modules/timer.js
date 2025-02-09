@@ -6,7 +6,7 @@ let timeoutId;
 let timerId;
 let timer;
 let guess;
-const timeout = 4;
+const timeout = 20;
 
 function handleUserGuess(event) {
     clearTimeout(timeoutId);
@@ -37,7 +37,6 @@ function handleQuestionTimeout() {
     timer = 0;
     timerHTML.textContent = timer;
     stopTimer();
-    console.log("GUESS", guess);
     if (!guess) questionTimeout();
     else {
         if (!confirmGuess()) questionTimeout();

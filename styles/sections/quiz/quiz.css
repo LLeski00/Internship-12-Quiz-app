@@ -43,12 +43,12 @@
     border-radius: 10px;
     height: 40px;
     text-align: center;
+    transition: border-color 0.5s;
 }
 
 .answers > p:hover {
     cursor: pointer;
     border-color: rgb(51, 89, 255);
-    transition: border-color 0.5s;
 }
 
 .feedback-message {
