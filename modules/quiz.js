@@ -79,18 +79,20 @@ function displayAnswers(answers) {
 
 function checkAnswer(guess) {
     stopTimer();
+    disableAnswersClick();
 
     if (guess === quizContent[currentQuestionIdx].correct_answer) {
         userScore++;
         displayAnswerFeedback(true, guess);
     } else displayAnswerFeedback(false, guess);
 
-    //TODO - disableAnswersClick();
     if (currentQuestionIdx + 1 === numOfQuestions) displayEndQuizButton();
     else displayNextQuestionButton();
 }
 
 function questionTimeout() {
+    disableAnswersClick();
+
     //TODO - Make a function for this like displayCorrectAnswer
     console.log(
         "Correct answer: ",
@@ -108,9 +110,19 @@ function questionTimeout() {
     else displayNextQuestionButton();
 }
 
+function disableAnswersClick() {
+    answersHtml.childNodes.forEach((answer) => {
+        answer.removeEventListener("click", handleUserGuess);
+    });
+}
+
 function displayAnswerFeedback(isCorrect, answer) {
     console.log("answer:", answer);
     console.log("answers: ", document.querySelectorAll(".answers > p"));
+    console.log(
+        "Correct answer: ",
+        quizContent[currentQuestionIdx].correct_answer
+    );
     const guess = [...document.querySelectorAll(".answers > p")].find(
         (p) => p.textContent === answer
     );
