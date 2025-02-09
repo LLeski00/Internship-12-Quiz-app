@@ -15,8 +15,18 @@
 }
 
 .quiz-nav {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 10px;
+    border-bottom: solid rgba(83, 157, 255, 0.507) 1px;
+}
+
+.quiz-nav > p:nth-child(2) {
+    text-align: center;
+}
+
+.quiz-nav > p:nth-child(3) {
+    text-align: end;
 }
 
 .answers {
