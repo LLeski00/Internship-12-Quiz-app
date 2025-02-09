@@ -95,16 +95,8 @@ function checkAnswer(guess) {
 
 function questionTimeout() {
     disableAnswersClick();
-
-    //TODO - Make a function for this like displayCorrectAnswer
-    const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
-        (p) =>
-            p.textContent ===
-            decodeHtmlEntities(quizContent[currentQuestionIdx].correct_answer)
-    );
-    correctAnswer.style.borderColor = "green";
+    highlightCorrectAnswer();
     feedbackHTML.textContent = "Time ran out!";
-
     checkEndQuiz();
 }
 
@@ -115,27 +107,30 @@ function disableAnswersClick() {
 }
 
 function displayAnswerFeedback(isCorrect, answer) {
+    highlightCorrectAnswer();
+
+    if (isCorrect) {
+        feedbackHTML.textContent = "The answer is correct!";
+    } else {
+        highlightIncorrectAnswer(answer);
+        feedbackHTML.textContent = "The answer is incorrect!";
+    }
+}
+
+function highlightCorrectAnswer() {
+    const correctAnswer = [...document.querySelectorAll(".answers > p")].find(
+        (p) =>
+            p.textContent ===
+            decodeHtmlEntities(quizContent[currentQuestionIdx].correct_answer)
+    );
+    correctAnswer.style.borderColor = "green";
+}
+
+function highlightIncorrectAnswer(answer) {
     const guess = [...document.querySelectorAll(".answers > p")].find(
         (p) => p.textContent === answer
     );
-
-    if (isCorrect) {
-        guess.style.borderColor = "green";
-        feedbackHTML.textContent = "The answer is correct!";
-    } else {
-        const correctAnswer = [
-            ...document.querySelectorAll(".answers > p"),
-        ].find(
-            (p) =>
-                p.textContent ===
-                decodeHtmlEntities(
-                    quizContent[currentQuestionIdx].correct_answer
-                )
-        );
-        guess.style.borderColor = "red";
-        correctAnswer.style.borderColor = "green";
-        feedbackHTML.textContent = "The answer is incorrect!";
-    }
+    guess.style.borderColor = "red";
 }
 
 function displayScoreFeedback() {
@@ -158,9 +153,7 @@ function displayScoreFeedback() {
         feedbackMessage =
             "Great job! You showed outstanding understanding and effort. Keep up the amazing work!";
 
-    feedbackHTML.textContent = `You reached the end of the quiz! Your score: ${
-        (userScore / numOfQuestions) * 100
-    }% ${feedbackMessage}`;
+    feedbackHTML.textContent = `You reached the end of the quiz! Your score: ${score}% ${feedbackMessage}`;
 }
 
 function displayNextQuestionButton() {
